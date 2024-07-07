@@ -9,19 +9,19 @@ const client = new GraphQLClient(process.env.NEXT_PUBLIC_BACKEND_URL || '', {
 });
 
 
-export const postLogin = async (Data: { Email: string, Password: string }) => {
+export const postLogin = async (Data: { Email: string, Password: string }): Promise<responseType> => {
     try {
+        const LOGIN_MUTATION = gql`mutation Login($userLogin: userLogin!) { login(userLogin: $userLogin) { status message token } }`;
 
-        const LOGIN_MUTATION = gql`
-            mutation Login($Email: String!, $Password: String!) {
-                login(loginData: { Email: $Email, Password: $Password }) { status token message }
-            }`
+        const { login }: { login: responseType } = await client.request(LOGIN_MUTATION, {
+            userLogin: { Email: Data.Email, Password: Data.Password }
+        });
 
-        const { login }: { login: loginResponse } = await client.request(LOGIN_MUTATION, { Email: Data.Email, Password: Data.Password });
-        console.log(login.token);
-
-    } catch (error) {
+        return login
+    } catch (error: any) {
         console.error('Login error:', error);
+        return { status: false, message: error.message ?? "error" }
     }
 };
 
+postLogin({ Email: "alan nixon", Password: "skj" })

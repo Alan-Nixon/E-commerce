@@ -15,8 +15,9 @@ type userInterface = {
     IsBlocked: boolean;
 }
 
-type loginResponse = {
+type responseType = {
     status:boolean,
+    message:string,
     token?:string,
-    message:string
+    data?:any
 }

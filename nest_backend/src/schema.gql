@@ -2,21 +2,22 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-input LoginData {
-  Email: String!
-  Password: String!
-}
-
 type Mutation {
-  login(loginData: LoginData!): Response!
+  login(userLogin: userLogin!): responseType!
 }
 
 type Query {
-  placeholder: String!
+  placeHolder: String!
 }
 
-type Response {
-  message: String
+type responseType {
+  data: [String!]
+  message: String!
   status: Boolean!
   token: String
+}
+
+input userLogin {
+  Email: String!
+  Password: String!
 }
