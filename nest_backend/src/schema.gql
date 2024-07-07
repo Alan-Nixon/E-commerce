@@ -2,6 +2,16 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type Mutation {
+  login(Email: String!, Password: String!): Response!
+}
+
 type Query {
-  login: String!
+  hello: String!
+}
+
+type Response {
+  message: String
+  status: Boolean!
+  token: String
 }
