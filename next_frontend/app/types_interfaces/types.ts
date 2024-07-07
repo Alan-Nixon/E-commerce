@@ -14,3 +14,9 @@ type userInterface = {
     IsAdmin: boolean;
     IsBlocked: boolean;
 }
+
+type loginResponse = {
+    status:boolean,
+    token?:string,
+    message:string
+}

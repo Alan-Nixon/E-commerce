@@ -1,18 +1,18 @@
-import { Resolver, Query, Mutation, Args } from '@nestjs/graphql';
-import { Response } from './response.dto';
+// src/graphql/user.resolver.ts
+
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
+import { LoginData, Response } from './response.dto';
 
 @Resolver()
 export class AppResolver {
+
     @Query(() => String)
-    hello(): string {
-        return 'Hello World';
-    }
+    placeholder(): string { return 'Placeholder Query' }
 
     @Mutation(() => Response)
-    async login(
-        @Args('Email') email: string,
-        @Args('Password') password: string,
-    ): Promise<Response> {
+    async login(@Args('loginData') loginData: LoginData): Promise<Response> {
+        console.log(loginData);
+        
         return { status: true, token: 'generated-token', message: 'Login successful' };
     }
-}
+} 

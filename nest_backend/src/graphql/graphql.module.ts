@@ -13,7 +13,7 @@ import { join } from 'path';
       sortSchema: true,
       debug: true,
       playground: true,
-    }),
+    }), 
   ],
   providers: [AppResolver],
 })

@@ -2,12 +2,17 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input LoginData {
+  Email: String!
+  Password: String!
+}
+
 type Mutation {
-  login(Email: String!, Password: String!): Response!
+  login(loginData: LoginData!): Response!
 }
 
 type Query {
-  hello: String!
+  placeholder: String!
 }
 
 type Response {

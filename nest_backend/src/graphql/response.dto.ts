@@ -1,7 +1,9 @@
-import { Field, ObjectType } from '@nestjs/graphql';
+// src/graphql/response.dto.ts
+
+import { Field, InputType, ObjectType } from '@nestjs/graphql';
 
 @ObjectType()
-export class Response {
+export class Response { 
     @Field(() => Boolean)
     status: boolean;
 
@@ -10,4 +12,13 @@ export class Response {
 
     @Field(() => String, { nullable: true })
     message: string;
+}
+ 
+@InputType() 
+export class LoginData {
+    @Field(() => String)
+    Email: string;
+
+    @Field(() => String)
+    Password: string;
 }
