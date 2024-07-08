@@ -1,13 +1,40 @@
 "use client"
 import { postLogin } from '@/app/Functions/user_related';
+import { validateEmail, validatePassword } from '@/app/Functions/validation';
 import Link from 'next/link';
 import React, { useState } from 'react';
 
 const LoginPage = () => {
   const [loginCredentials, setLoginCredentials] = useState({ Email: "", Password: "" })
+  const [error, setError] = useState("")
 
   const submitForm = () => {
-    postLogin(loginCredentials)
+    if (validation()) {
+      postLogin(loginCredentials).then((data) => {
+        console.log(data);
+        if (data.status) {
+
+        } else {
+          setError(data.message)
+        }
+      })
+    }
+  }
+
+
+  function validation() {
+
+    if (validateEmail(loginCredentials.Email)) {
+      if (validatePassword(loginCredentials.Password)) {
+        return true
+      } else {
+        setError("Invalid password, please enter a valid password")
+        return false
+      }
+    } else {
+      setError("Invalid email, please enter a valid email")
+      return false
+    }
   }
 
   return (
@@ -18,14 +45,21 @@ const LoginPage = () => {
       <div className="bg-black w-[40rem] bg-opacity-50 p-8 rounded-lg flex flex-col items-center">
         <h2 className="mb-8 text-center text-2xl font-bold tracking-tight text-white">Sign in to your account</h2>
         <form className="w-full max-w-md bg-white bg-opacity-60 p-8 rounded-lg">
+          {error && <p className="error mb-2">{error}</p>}
 
           <div className="relative z-0 w-full mb-5 group">
-            <input type="email" onChange={(e) => setLoginCredentials({ Email: e.target.value + "", Password: loginCredentials.Password })} name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 appearance-none text-black border-black focus:outline-none focus:ring-0 focus:border-black peer" placeholder=" " required />
+            <input type="email" onChange={(e) => {
+              setLoginCredentials({ Email: e.target.value + "", Password: loginCredentials.Password });
+              setError("")
+            }} name="floating_email" id="floating_email" className="block py-2.5 px-0 w-full text-sm  bg-transparent border-0 border-b-2 appearance-none text-black border-black focus:outline-none focus:ring-0 focus:border-black peer" placeholder=" " required />
             <label htmlFor="floating_email" className="peer-focus:font-medium absolute text-sm text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Email address</label>
           </div>
 
           <div className="relative z-0 w-full mb-5 group">
-            <input type="password" onChange={(e) => setLoginCredentials({ Password: e.target.value + "", Email: loginCredentials.Email })} name="floating_password" id="floating_password" className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 appearance-none text-black border-black focus:border-black focus:outline-none focus:ring-0 peer" placeholder=" " required />
+            <input type="password" onChange={(e) => {
+              setLoginCredentials({ Password: e.target.value + "", Email: loginCredentials.Email });
+              setError("")
+            }} name="floating_password" id="floating_password" className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 appearance-none text-black border-black focus:border-black focus:outline-none focus:ring-0 peer" placeholder=" " required />
             <label htmlFor="floating_password" className="peer-focus:font-medium absolute text-sm text-black duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-black peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Password</label>
           </div>
 

@@ -10,7 +10,7 @@
     "sourceMap": true,
     "outDir": "./dist",
     "types": ["class-validator"],
-    "baseUrl": "./",
+    "baseUrl": "./", 
     "incremental": true,
     "skipLibCheck": true,
     "strictNullChecks": false,

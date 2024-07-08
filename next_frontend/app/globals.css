@@ -12,3 +12,7 @@ body {
 body::-webkit-scrollbar {
     display: none;
 }
+
+.error {
+    color: red
+}

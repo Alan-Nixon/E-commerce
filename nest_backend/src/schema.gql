@@ -4,14 +4,25 @@
 
 type Mutation {
   login(userLogin: userLogin!): responseType!
+  register(userRegister: UserRegister!): responseType!
 }
 
 type Query {
   placeHolder: String!
 }
 
+input UserRegister {
+  Email: String!
+  FullName: String!
+  IsAdmin: Boolean!
+  IsBlocked: Boolean!
+  Name: String!
+  Password: String!
+  Phone: Float!
+}
+
 type responseType {
-  data: [String!]
+  data: String
   message: String!
   status: Boolean!
   token: String

@@ -1,8 +1,11 @@
 import { Args, Mutation, Query, Resolver } from "@nestjs/graphql";
-import { userLogin, responseType } from "./user.dto";
+import { userLogin, responseType, UserType, UserRegister } from "./user.dto";
+import { UserService } from "./user.service";
 
 @Resolver()
 export class UserResolver {
+
+    constructor(private readonly UserService: UserService) { }
 
     @Query(() => String)
     placeHolder(): string {
@@ -11,13 +14,12 @@ export class UserResolver {
 
     @Mutation(() => responseType)
     async login(@Args('userLogin') userLogin: userLogin): Promise<responseType> {
-        const authenticated = true;
-        console.log(userLogin);
-        
-        if (authenticated) {
-            return { status: true, message: 'Login successfull',token:"token ind" };
-        } else {
-            return { status: false, message: 'Invalid credentials' };
-        }
-    } 
+        return await this.UserService.login(userLogin)
+    }
+
+    @Mutation(() => responseType)
+    async register(@Args('userRegister') userRegister: UserRegister): Promise<responseType> {
+        return await this.UserService.register(userRegister)
+    }
+
 }

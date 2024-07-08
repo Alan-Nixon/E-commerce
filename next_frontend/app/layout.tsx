@@ -12,7 +12,8 @@ const bannedNavFooter = ["/user/login", "/user/register"]
 
 
 export default function RootLayout({ children, }: Readonly<{ children: React.ReactNode }>) {
-  const pathName = usePathname()
+  const pathName = usePathname();
+  
   return (
     <html lang="en">
       <title>Av Costumes</title>
