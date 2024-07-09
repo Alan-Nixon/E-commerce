@@ -2,6 +2,7 @@
 import { validateEmail, validateFullName, validateName, validatePassword, validatePhone } from '@/app/Functions/validation';
 import Link from 'next/link';
 import React, { useState } from 'react'
+import { useRouter } from 'next/navigation';
 
 function RegisterPage() {
   const [error, setError] = useState("");
@@ -9,8 +10,9 @@ function RegisterPage() {
     Email: "", Password: "", Name: "", FullName: "", Phone: "", IsAdmin: false, IsBlocked: false
   })
 
+  const { push } = useRouter()
+
   const onchangeFunc = (e: any) => {
-    console.log(e.target.name, e.target.value);
 
     setRegisterCredentials((rest) => ({
       ...rest,
@@ -20,9 +22,8 @@ function RegisterPage() {
   }
 
   const submitForm = () => {
-    console.log(registerCredentials);
     if (validation()) {
-
+      push('/')
     }
   }
 
@@ -32,7 +33,7 @@ function RegisterPage() {
         if (validatePhone(registerCredentials.Phone)) {
           if (validateName(registerCredentials.Name)) {
             if (validateFullName(registerCredentials.FullName)) {
-                return true
+              return true
             } else {
               setError("Invalid Full Name")
               return false
@@ -60,9 +61,9 @@ function RegisterPage() {
       className="h-screen w-full bg-cover bg-center flex items-center justify-center overflow-y-hidden"
       style={{ backgroundImage: "url('/RegisterImage.jpg')" }}
     >
-      <div className="bg-black w-[40rem] bg-opacity-50 p-8 rounded-lg flex flex-col items-center">
+      <div className="bg-black w-[40rem] bg-opacity-50 p-5 rounded-lg flex flex-col items-center">
         <h2 className="mb-8 text-center text-2xl font-bold tracking-tight text-white">Register to your account</h2>
-        <form className="w-full max-w-md bg-white bg-opacity-60 p-8 rounded-lg">
+        <form className="w-full max-w-md bg-white bg-opacity-60 p-6 rounded-lg">
           {error && <p className="error mb-2">{error}</p>}
 
           <div className="flex gap-4">

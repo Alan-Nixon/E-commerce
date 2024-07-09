@@ -2,21 +2,18 @@ import { createClient } from 'redis';
 
 
 export const client = createClient({
-    password: 'fGvI2Ge7sjkdSiMfbHznLEqxrztUpAD2',
+    password: process.env.REDDIS_PASSWORD,
     socket: {
-        host: 'redis-11497.c305.ap-south-1-1.ec2.redns.redis-cloud.com',
-        port: 11497
+        host: process.env.REDDIS_HOST,
+        port: Number(process.env.REDDIS_PORT)
     }
 });
 
 
-client.on('connect', () => {
-    console.log('Connected to Redis');
-});
 
-client.on('error', (err) => {
-    console.error(`Error connecting to Redis: ${err}`);
-}); 
+client.on('connect', () => console.log('Connected to Redis'));
+
+client.on('error', (err) => console.error(`Error connecting to Redis: ${err}`));
 
 
 

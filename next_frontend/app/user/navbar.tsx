@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { logout } from '../Functions/user_related';
 
 function Navbar() {
 
@@ -52,15 +53,10 @@ function Navbar() {
                     </button>
                     <div className="ml-3 flex gap-3">
                         <div className="mt-1 ml-8 flex font-bold py-2 px-3 text-white rounded md:bg-transparent md:p-0">
-                            {user ? <>
-                                <img src={user.ProfileImage} className='rounded-full w-[32px]' alt="" />
-                                <p className="mt-[3px] m-2 ">{user.FullName}</p>
-                                <ShoppingCartIcon sx={{ color: 'white', marginTop: "5px", marginLeft: "10px" }} />
-                            </> : <>
-                                <Link href="/Login" className={'block py-2 px-3 text-white rounded md:bg-transparent md:p-0'}>Login</Link>
-                                <Link href="/Register" className={'block py-2 ml-4 px-3 text-white rounded md:bg-transparent md:p-0'}>Register</Link>
-                            </>}
+                            <img src={user.ProfileImage} className='rounded-full w-[32px]' alt="" />
+                            <p className="mt-[3px] m-2 ">{user.FullName}</p>
                         </div>
+                        <p onClick={logout} className="block cursor-pointer py-4 px-3 font-medium text-white rounded mt-[5px] md:bg-transparent md:p-0">Logout</p>
                     </div>
                 </div>
 
@@ -79,6 +75,7 @@ function Navbar() {
                         <li> <Link href="/" className={'block py-2 px-3 text-white rounded md:bg-transparent md:p-0'}>Home</Link> </li>
                         <li> <Link href="/#about" className={'block py-2 px-3 text-white rounded md:bg-transparent md:p-0'}>About</Link></li>
                         <li> <Link href="#Products" className={'block py-2 px-3 text-white rounded md:bg-transparent md:p-0'}>Products</Link></li>
+                        <li><ShoppingCartIcon sx={{ color: 'white', marginLeft: "10px" }} /></li>
 
                     </ul>
                 </div>

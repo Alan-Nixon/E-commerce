@@ -1,23 +1,31 @@
 "use client"
-import { postLogin } from '@/app/Functions/user_related';
+import React, { useState } from 'react';
 import { validateEmail, validatePassword } from '@/app/Functions/validation';
 import Link from 'next/link';
-import React, { useState } from 'react';
+import { signIn } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 
 const LoginPage = () => {
   const [loginCredentials, setLoginCredentials] = useState({ Email: "", Password: "" })
   const [error, setError] = useState("")
+  const router = useRouter()
 
   const submitForm = () => {
-    if (validation()) {
-      postLogin(loginCredentials).then((data) => {
-        console.log(data);
-        if (data.status) {
 
+    if (validation()) {
+    
+      signIn('credentials', {
+        redirect: false,
+        Email: loginCredentials.Email,
+        Password: loginCredentials.Password,
+      }).then(result => {
+        if (result?.error) {
+          setError('Invalid Email or Password. Please try again.');
         } else {
-          setError(data.message)
+          router.push('/');
         }
       })
+      
     }
   }
 
@@ -25,12 +33,15 @@ const LoginPage = () => {
   function validation() {
 
     if (validateEmail(loginCredentials.Email)) {
+      console.log(loginCredentials);
+
       if (validatePassword(loginCredentials.Password)) {
         return true
       } else {
         setError("Invalid password, please enter a valid password")
         return false
       }
+
     } else {
       setError("Invalid email, please enter a valid email")
       return false

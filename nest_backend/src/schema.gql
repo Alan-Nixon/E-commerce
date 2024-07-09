@@ -3,6 +3,8 @@
 # ------------------------------------------------------
 
 type Mutation {
+  forgetPassword(Email: String!, newPassword: String!): responseType!
+  getUserDetails(Email: String!): responseType!
   login(userLogin: userLogin!): responseType!
   register(userRegister: UserRegister!): responseType!
 }

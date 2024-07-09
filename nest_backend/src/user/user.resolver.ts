@@ -22,4 +22,14 @@ export class UserResolver {
         return await this.UserService.register(userRegister)
     }
 
+    @Mutation(() => responseType)
+    async getUserDetails(@Args('Email') Email: string): Promise<responseType> {
+        return await this.UserService.getUserDetails(Email)
+    }
+
+    @Mutation(() => responseType)
+    async forgetPassword(@Args('Email') Email: string, @Args('newPassword') newPassword: string) {
+        return await this.UserService.forgetPassword(Email, newPassword)
+    }
+
 }

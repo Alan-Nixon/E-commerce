@@ -46,11 +46,11 @@ export class responseType {
     token?: string;
 
     @Field(() => String || Number || Boolean || Array || Object, { nullable: true })
-    data?: any;
+    data?: any; 
 }
+ 
 
-
-
+ 
 export type UserType = {
     Name: string,
     FullName: string,
