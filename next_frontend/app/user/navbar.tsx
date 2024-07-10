@@ -2,8 +2,13 @@ import Link from 'next/link';
 import React from 'react';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { logout } from '../Functions/user_related';
+import { useSession } from 'next-auth/react';
 
 function Navbar() {
+    const { data: session, status } = useSession();
+
+    console.log();
+    
 
     const Data = {
         Logo: "https://flowbite.com/docs/images/logo.svg",

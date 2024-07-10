@@ -1,6 +1,8 @@
 "use client";
 import { Card } from "./helpers/card";
 import { ProtectedRoute } from "./protected";
+import Footer from "./user/footer";
+import Navbar from "./user/navbar";
 
 export default function Home() {
   const ourProducts = new Array(8).fill({
@@ -12,6 +14,7 @@ export default function Home() {
 
   return (
     <ProtectedRoute>
+      <Navbar />
       <>
         <div className="flex m-5 mt-20 h-[450px] overflow-hidden">
           <img className="w-full h-full object-cover" src="/HomeBannerImage.jpg" alt="Home Banner" />
@@ -66,6 +69,7 @@ export default function Home() {
           </div>
         </div>
       </>
+      <Footer />
     </ProtectedRoute>
   );
 }

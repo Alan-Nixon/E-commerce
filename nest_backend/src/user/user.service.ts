@@ -2,11 +2,15 @@ import { UserRepositary } from "src/repositary/user.repositarty";
 import { responseType, userLogin, UserType } from "./user.dto";
 import { Injectable } from "@nestjs/common";
 import { compare, hash } from "bcrypt";
+import { UserHelpers } from "./user.helpers";
 
 @Injectable()
 export class UserService {
 
-    constructor(private readonly UserRepositary: UserRepositary) { }
+    constructor(
+        private readonly UserRepositary: UserRepositary,
+        private readonly UserHelpers: UserHelpers
+    ) { }
 
     async login(userLogin: userLogin): Promise<responseType> {
 
@@ -14,7 +18,10 @@ export class UserService {
             const user: UserType = await this.UserRepositary.getUserByEmail(userLogin.Email + "")
             if (user) {
                 if (await compare(userLogin.Password, user.Password)) {
-                    return { status: true, message: 'Login successfull', token: "token ind", data: JSON.stringify(user) };
+                    console.log(await compare(userLogin.Password, user.Password))
+                    const token = this.UserHelpers.generateToken(user)
+                    console.log(token);
+                    return { status: true, message: 'Login successfull', token, data: JSON.stringify(user) };
                 } else {
                     return { status: false, message: "Incorrect Password" }
                 }
@@ -45,7 +52,7 @@ export class UserService {
             return { status: false, message: error.message }
         }
     }
- 
+
     async forgetPassword(Email: string, newPassword: string): Promise<responseType> {
         try {
             const data = await this.UserRepositary.getUserByEmail(Email)

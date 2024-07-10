@@ -15,9 +15,11 @@ const LoginPage = () => {
     if (validation()) {
     
       signIn('credentials', {
+        
         redirect: false,
         Email: loginCredentials.Email,
         Password: loginCredentials.Password,
+
       }).then(result => {
         if (result?.error) {
           setError('Invalid Email or Password. Please try again.');
@@ -33,7 +35,6 @@ const LoginPage = () => {
   function validation() {
 
     if (validateEmail(loginCredentials.Email)) {
-      console.log(loginCredentials);
 
       if (validatePassword(loginCredentials.Password)) {
         return true

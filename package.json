@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "graphql-type-json": "^0.3.2"
+    "graphql-type-json": "^0.3.2",
+    "jsonwebtoken": "^9.0.2"
   }
 }
