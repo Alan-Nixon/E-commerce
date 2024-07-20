@@ -10,7 +10,7 @@ type userInterface = {
     ProfileImage: string;
     Email: string;
     Password: string;
-    Phone: number
+    Phone: number | string
     IsAdmin: boolean;
     IsBlocked: boolean;
 }

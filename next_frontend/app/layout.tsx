@@ -2,8 +2,9 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { SessionProvider } from 'next-auth/react';
+import { ProtectedRoute } from "./protected";
 
-const inter = Inter({ subsets: ["latin"] });  
+const inter = Inter({ subsets: ["latin"] });
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
 
@@ -12,7 +13,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <title>Av Costumes</title>
       <body className={inter.className}>
         <SessionProvider>
-          {children}
+            {children}
         </SessionProvider>
       </body>
     </html>

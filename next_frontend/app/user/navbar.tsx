@@ -57,10 +57,12 @@ function Navbar() {
                         </svg>
                     </button>
                     <div className="ml-3 flex gap-3">
+                        <Link href="/user/profile">
                         <div className="mt-1 ml-8 flex font-bold py-2 px-3 text-white rounded md:bg-transparent md:p-0">
                             <img src={user.ProfileImage} className='rounded-full w-[32px]' alt="" />
                             <p className="mt-[3px] m-2 ">{user.FullName}</p>
                         </div>
+                        </Link>
                         <p onClick={logout} className="block cursor-pointer py-4 px-3 font-medium text-white rounded mt-[5px] md:bg-transparent md:p-0">Logout</p>
                     </div>
                 </div>

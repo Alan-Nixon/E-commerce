@@ -14,6 +14,7 @@ declare module 'next-auth' {
             Phone: number;
             IsAdmin: boolean;
             IsBlocked: boolean;
+            profileImage:string;
         }
     }
 
@@ -74,6 +75,7 @@ const authOptions: NextAuthOptions = {
                 Phone: token.Phone as number,
                 IsAdmin: token.IsAdmin as boolean,
                 IsBlocked: token.IsBlocked as boolean,
+                profileImage:token.profileImage as string
             };
             return session;
         },

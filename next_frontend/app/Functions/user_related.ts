@@ -30,7 +30,6 @@ export const getUserDetails = async (Email: string) => {
     try {
         const { getUserDetails }: { getUserDetails: responseType } = await client.request(USER_DETAILS, { Email });
         console.log(JSON.parse(getUserDetails.data));
-
         return getUserDetails.data
     } catch (error: any) {
         console.log(error);
@@ -38,3 +37,11 @@ export const getUserDetails = async (Email: string) => {
     }
 }
 
+
+export const postRegister = (userDetails:userInterface) => {
+    try {
+        
+    } catch (error) {
+        
+    }
+}

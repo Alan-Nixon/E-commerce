@@ -54,7 +54,7 @@ export class responseType {
 export type UserType = {
     Name: string,
     FullName: string,
-    Email: string,
+    Email: string, 
     Password: string
     Phone: number,
     IsAdmin: boolean,
