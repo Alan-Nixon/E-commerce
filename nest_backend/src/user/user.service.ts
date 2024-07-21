@@ -18,9 +18,7 @@ export class UserService {
             const user: UserType = await this.UserRepositary.getUserByEmail(userLogin.Email + "")
             if (user) {
                 if (await compare(userLogin.Password, user.Password)) {
-                    console.log(await compare(userLogin.Password, user.Password))
                     const token = this.UserHelpers.generateToken(user)
-                    console.log(token);
                     return { status: true, message: 'Login successfull', token, data: JSON.stringify(user) };
                 } else {
                     return { status: false, message: "Incorrect Password" }
@@ -35,8 +33,13 @@ export class UserService {
 
     async register(userRegister: UserType): Promise<responseType> {
         try {
-            console.log(userRegister);
-            return { status: true, message: "success" }
+            const { data } = await this.getUserDetails(userRegister.Email);
+            if (data !== "null") {
+                return { status: false, message: "User already exist" }
+            } else {
+                await this.UserRepositary.createUser(userRegister)
+                return { status: true, message: "success", data, token: this.UserHelpers.generateToken(userRegister) }
+            }
         } catch (error: any) {
             return { status: false, message: error.message }
         }
@@ -45,7 +48,6 @@ export class UserService {
     async getUserDetails(Email: string): Promise<responseType> {
         try {
             const data = JSON.stringify(await this.UserRepositary.getUserByEmail(Email))
-            console.log(data);
             return { status: true, message: "success", data }
         } catch (error: any) {
             console.log(error.message ?? "Internal Error occured");

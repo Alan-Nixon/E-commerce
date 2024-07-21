@@ -22,11 +22,8 @@ const LoginPage = () => {
         Password: loginCredentials.Password,
 
       }).then(result => {
-        if (result?.error) {
-          setError('Invalid Email or Password. Please try again.');
-        } else {
-          router.push('/');
-        }
+        
+        result?.error ? setError('Invalid Email or Password. Please try again.') : router.push('/');
       })
 
     }

@@ -1,6 +1,6 @@
 import { GraphQLClient } from 'graphql-request';
 import Cookies from 'js-cookie'
-import { LOGIN_MUTATION, USER_DETAILS } from './user_query_mutation';
+import { LOGIN_MUTATION, REGISTER_MUTATION, USER_DETAILS } from './user_query_mutation';
 import { signOut } from 'next-auth/react';
 
 const getToken = () => "Bearer" + Cookies.get('userToken');
@@ -38,10 +38,12 @@ export const getUserDetails = async (Email: string) => {
 }
 
 
-export const postRegister = (userDetails:userInterface) => {
+export const postRegister = async (userRegister: userInterface) => {
     try {
-        
+        const { register }: any = await client.request(REGISTER_MUTATION, { userRegister })
+        return register
     } catch (error) {
-        
+        console.log(error);
+
     }
 }

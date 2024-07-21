@@ -27,6 +27,10 @@ export class UserRegister {
 
     @Field()
     IsAdmin: boolean;
+
+    @Field()
+    ProfileImage: string;
+
     @Field()
     IsBlocked: boolean;
 
@@ -46,15 +50,15 @@ export class responseType {
     token?: string;
 
     @Field(() => String || Number || Boolean || Array || Object, { nullable: true })
-    data?: any; 
+    data?: any;
 }
- 
 
- 
+
+
 export type UserType = {
     Name: string,
     FullName: string,
-    Email: string, 
+    Email: string,
     Password: string
     Phone: number,
     IsAdmin: boolean,

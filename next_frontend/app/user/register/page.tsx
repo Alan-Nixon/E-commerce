@@ -3,6 +3,7 @@ import { validateEmail, validateFullName, validateName, validatePassword, valida
 import Link from 'next/link';
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation';
+import { signIn } from 'next-auth/react';
 import { IsSession } from '@/app/protected';
 import { postRegister } from '@/app/Functions/user_related';
 
@@ -27,8 +28,23 @@ function RegisterPage() {
 
   const submitForm = () => {
     if (validation()) {
-      postRegister(registerCredentials)
-      // push('/')
+      postRegister({
+        ...registerCredentials,
+        Phone: Number(registerCredentials.Phone)
+
+      }).then(({ status, message,data }) => { 
+        
+        status ? signIn('credentials', {
+
+          redirect: false,
+          Email: data.Email,
+          Password: data.Password,
+
+        }).then(result => {
+          result?.error ? setError('Invalid Email or Password. Please try again.') : push('/');
+        }) : setError(message);
+
+      })
     }
   }
 

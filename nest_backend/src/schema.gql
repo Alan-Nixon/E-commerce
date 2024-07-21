@@ -21,6 +21,7 @@ input UserRegister {
   Name: String!
   Password: String!
   Phone: Float!
+  ProfileImage: String!
 }
 
 type responseType {
