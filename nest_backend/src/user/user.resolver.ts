@@ -20,18 +20,25 @@ export class UserResolver {
     @Mutation(() => responseType)
     async register(@Args('userRegister') userRegister: UserRegister): Promise<responseType> {
         console.log(userRegister);
-        
-        return await this.UserService.register(userRegister) 
+
+        return await this.UserService.register(userRegister)
     }
- 
+
     @Mutation(() => responseType)
     async getUserDetails(@Args('Email') Email: string): Promise<responseType> {
         return await this.UserService.getUserDetails(Email)
     }
 
-    @Mutation(() => responseType) 
+    @Mutation(() => responseType)
     async forgetPassword(@Args('Email') Email: string, @Args('newPassword') newPassword: string) {
         return await this.UserService.forgetPassword(Email, newPassword)
+    }
+
+    // admin
+
+    @Mutation(() => responseType)
+    async adminLogin(@Args('Email') Email: string, @Args('Password') Password: string) {
+        return await this.UserService.adminLogin(Email,Password)
     }
 
 }

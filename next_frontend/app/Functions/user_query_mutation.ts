@@ -21,7 +21,7 @@ export const USER_DETAILS = gql`
   }
 `;
 
-export const REGISTER_MUTATION = `
+export const REGISTER_MUTATION = gql`
   mutation Register($userRegister: UserRegister!) {
     register(userRegister: $userRegister) {
       status
@@ -30,3 +30,11 @@ export const REGISTER_MUTATION = `
     }
   }
 `;
+
+export const ADMIN_LOGIN = gql`
+  mutation AdminLogin($Email:String!, $Password:String!){
+    adminLogin(Email:$Email Password:$Password) {
+      message status token data
+    }
+  }`
+

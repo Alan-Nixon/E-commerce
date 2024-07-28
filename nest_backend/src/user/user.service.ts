@@ -59,8 +59,6 @@ export class UserService {
         try {
             const data = await this.UserRepositary.getUserByEmail(Email)
             if (data) {
-                console.log(newPassword, data);
-
                 if (await compare(newPassword, data.Password + "")) {
                     return { status: false, message: "new password cannot be same as old one!" }
                 } else {
@@ -72,6 +70,29 @@ export class UserService {
                 return { status: false, message: "Email not found" }
             }
         } catch (error: any) {
+            console.log(error ?? "Internal Error occured");
+            return { status: false, message: error.message }
+        }
+    }
+
+    async adminLogin(Email: string, Password: string) {
+        try {
+            const data = await this.UserRepositary.getUserByEmail(Email)
+            if (data) {
+                if (data.IsAdmin) {
+                    if (await compare(Password, data.Password)) {
+                        const token = this.UserHelpers.generateToken(data)
+                        return { status: true, message: 'Login successfull', token, data: JSON.stringify(data) };
+                    } else {
+                        return { status: false, message: "Password does not match" }
+                    }
+                } else {
+                    return { status: false, message: "Admin not registered" }
+                }
+            } else {
+                return { status: false, message: "Admin not registered" }
+            }
+        } catch (error) {
             console.log(error ?? "Internal Error occured");
             return { status: false, message: error.message }
         }

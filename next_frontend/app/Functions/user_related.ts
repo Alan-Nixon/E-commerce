@@ -1,6 +1,6 @@
 import { GraphQLClient } from 'graphql-request';
 import Cookies from 'js-cookie'
-import { LOGIN_MUTATION, REGISTER_MUTATION, USER_DETAILS } from './user_query_mutation';
+import { ADMIN_LOGIN, LOGIN_MUTATION, REGISTER_MUTATION, USER_DETAILS } from './user_query_mutation';
 import { signOut } from 'next-auth/react';
 
 const getToken = () => "Bearer" + Cookies.get('userToken');
@@ -11,8 +11,12 @@ const client = new GraphQLClient(process.env.NEXT_PUBLIC_BACKEND_URL || '', {
 
 export const logout = () => { signOut({ callbackUrl: '/user/login' }) }
 
+interface loginType {
+    Email: string,
+    Password: string
+}
 
-export const postLogin = async (Data: { Email: string, Password: string }): Promise<responseType> => {
+export const postLogin = async (Data: loginType): Promise<responseType> => {
     try {
 
         const { login }: { login: responseType } = await client.request(LOGIN_MUTATION, {
@@ -44,6 +48,15 @@ export const postRegister = async (userRegister: userInterface) => {
         return register
     } catch (error) {
         console.log(error);
+    }
+}
 
+export const adminLogin = async ({ Email, Password }: loginType) => {
+    try {
+        const { adminLogin }: { adminLogin: responseType } = await client.request(ADMIN_LOGIN, { Email, Password })
+        return adminLogin
+    } catch (error:any) {
+        console.log(error);
+        return { status: false, message: error.message ?? "Internal error occured" }
     }
 }

@@ -3,6 +3,7 @@
 # ------------------------------------------------------
 
 type Mutation {
+  adminLogin(Email: String!, Password: String!): responseType!
   forgetPassword(Email: String!, newPassword: String!): responseType!
   getUserDetails(Email: String!): responseType!
   login(userLogin: userLogin!): responseType!
