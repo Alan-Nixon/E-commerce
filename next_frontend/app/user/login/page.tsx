@@ -23,7 +23,7 @@ const LoginPage = () => {
 
       }).then(result => {
         
-        result?.error ? setError('Invalid Email or Password. Please try again.') : router.push('/');
+        result?.error ? setError('Invalid Email or Password. Please try again.') : router.push('/admin/dashboard');
       })
 
     }

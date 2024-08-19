@@ -1,6 +1,5 @@
 import { createClient } from 'redis';
 
-
 export const client = createClient({
     password: process.env.REDDIS_PASSWORD,
     socket: {
@@ -9,11 +8,8 @@ export const client = createClient({
     }
 });
 
-
-
 client.on('connect', () => console.log('Connected to Redis'));
 
 client.on('error', (err) => console.error(`Error connecting to Redis: ${err}`));
-
 
 

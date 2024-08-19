@@ -31,6 +31,7 @@ export const REGISTER_MUTATION = gql`
   }
 `;
 
+
 export const ADMIN_LOGIN = gql`
   mutation AdminLogin($Email:String!, $Password:String!){
     adminLogin(Email:$Email Password:$Password) {

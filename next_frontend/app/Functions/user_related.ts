@@ -55,8 +55,8 @@ export const adminLogin = async ({ Email, Password }: loginType) => {
     try {
         const { adminLogin }: { adminLogin: responseType } = await client.request(ADMIN_LOGIN, { Email, Password })
         return adminLogin
-    } catch (error:any) {
+    } catch (error: any) {
         console.log(error);
-        return { status: false, message: error.message ?? "Internal error occured" }
+        return { status: false, message: error.message ?? "Internal error occured", data: null, token: "" }
     }
 }

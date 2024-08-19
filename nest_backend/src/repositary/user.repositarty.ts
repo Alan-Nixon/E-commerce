@@ -5,7 +5,7 @@ import { UserType } from "src/user/user.dto";
 @Injectable()
 export class UserRepositary {
 
-    constructor() { client.connect() }
+    constructor() { client.connect(); }
 
     async getUserByEmail(Email: string) {
         return JSON.parse(await client.get(Email))

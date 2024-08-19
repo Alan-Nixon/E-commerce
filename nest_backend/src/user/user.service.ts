@@ -13,7 +13,6 @@ export class UserService {
     ) { }
 
     async login(userLogin: userLogin): Promise<responseType> {
-
         try {
             const user: UserType = await this.UserRepositary.getUserByEmail(userLogin.Email + "")
             if (user) {
@@ -30,20 +29,21 @@ export class UserService {
             return { status: false, message: error.message ?? "Internal Error" }
         }
     }
-
+ 
     async register(userRegister: UserType): Promise<responseType> {
         try {
             const { data } = await this.getUserDetails(userRegister.Email);
             if (data !== "null") {
                 return { status: false, message: "User already exist" }
             } else {
+                userRegister.Password = await hash(userRegister.Password,10)
                 await this.UserRepositary.createUser(userRegister)
                 return { status: true, message: "success", data, token: this.UserHelpers.generateToken(userRegister) }
             }
         } catch (error: any) {
             return { status: false, message: error.message }
         }
-    }
+    } 
 
     async getUserDetails(Email: string): Promise<responseType> {
         try {
@@ -68,7 +68,7 @@ export class UserService {
                 }
             } else {
                 return { status: false, message: "Email not found" }
-            }
+            } 
         } catch (error: any) {
             console.log(error ?? "Internal Error occured");
             return { status: false, message: error.message }

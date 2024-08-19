@@ -1,21 +1,24 @@
 "use client";
 import { adminLogin } from "@/app/Functions/user_related";
 import { validateEmail, validatePassword } from "@/app/Functions/validation";
+import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 
 function Login() {
     const [cred, setCred] = useState({ Email: "", Password: "" });
     const [error, setError] = useState("")
+    const router = useRouter()
 
     const submitButton = () => {
         if (validateEmail(cred.Email)) {
             if (validatePassword(cred.Password)) {
-                adminLogin(cred).then((response) => {
-                    if (response?.status) {
-                        
-                    } else {
-                        setError(response.message)
-                    }
+                signIn('AdminCredentials', {
+                    redirect: false,
+                    Email: cred.Email,
+                    Password: cred.Password,
+                }).then(result => {
+                    result?.error ? setError('Invalid Email or Password. Please try again.') : router.push('/');
                 })
             } else {
                 setError("Invalid Password")

@@ -8,6 +8,7 @@ export function ProtectedRoute({ children, route }: { children: ReactNode, route
 
     const { data: session, status } = useSession();
     const router = useRouter()
+    console.log(session);
 
     useEffect(() => {
 
@@ -23,15 +24,23 @@ export function ProtectedRoute({ children, route }: { children: ReactNode, route
 }
 
 
-export const IsSession = ({ children }: { children: ReactNode}) => {
+export const IsSession = ({ children }: { children: ReactNode }) => {
     const { status } = useSession();
     const router = useRouter()
 
-    useEffect(() => { 
+    useEffect(() => {
         if (status === 'authenticated') { router.push("/") }
     }, [status]);
 
     if (status === 'loading') { return <LoadingPage /> }
 
     return <>{children}</>;
+}
+
+export const AdminProtected = ({ children }: { children: ReactNode }) => {
+    const { data: session, status } = useSession();
+    const router = useRouter()
+    console.log(session);
+
+    return children
 }
