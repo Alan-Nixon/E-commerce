@@ -1,8 +1,9 @@
 "use client";
-import { useEffect, ReactNode } from 'react';
+import { useEffect, ReactNode, useState } from 'react';
 import { useSession, signIn } from 'next-auth/react';
 import LoadingPage from './loading';
 import { useRouter } from 'next/navigation';
+import { getAdminToken, isAdminAuthenticated } from './Functions/admin_related';
 
 export function ProtectedRoute({ children, route }: { children: ReactNode, route: string }) {
 
@@ -37,10 +38,24 @@ export const IsSession = ({ children }: { children: ReactNode }) => {
     return <>{children}</>;
 }
 
-export const AdminProtected = ({ children }: { children: ReactNode }) => {
-    const { data: session, status } = useSession();
+export const AdminProtected = ({ children, route }: { route: string, children: ReactNode }) => {
+    const [loading, setLoading] = useState(true)
     const router = useRouter()
-    console.log(session);
 
-    return children
+    const token = getAdminToken()
+    useEffect(() => {
+        if (token) {
+            isAdminAuthenticated(token).then(({ status }: responseType) => {
+                if (!status) {
+                    router.push("/admin/login")
+                } else {
+                    setLoading(false)
+                }
+            });
+        } else {
+            router.push("/admin/login")
+        }
+    }, [])
+
+    return loading ? <LoadingPage /> : children
 }

@@ -11,7 +11,7 @@ function Navbar() {
     
 
     const Data = {
-        Logo: "https://flowbite.com/docs/images/logo.svg",
+        Logo: "/Logo.jpg",
         CompanyName: "AV Costumes"
     }
 
@@ -31,7 +31,7 @@ function Navbar() {
         <nav className="fixed top-0 w-full z-50 border-gray-200 bg-gray-900">
             <div className="max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
                 <p className="flex items-center space-x-3 rtl:space-x-reverse">
-                    <img src={Data.Logo} className="h-8" alt="Flowbite Logo" />
+                    <img src={Data.Logo} className="h-8 rounded-full" alt="Flowbite Logo" />
                     <span className="self-center text-2xl font-semibold whitespace-nowrap text-white">{Data.CompanyName}</span>
                 </p>
                 <div className="flex md:order-2">

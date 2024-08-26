@@ -21,3 +21,8 @@ type responseType = {
     token?:string,
     data?:any
 }
+
+type loginType = {
+    Email: string,
+    Password: string
+}

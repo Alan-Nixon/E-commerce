@@ -1,25 +1,41 @@
 "use client";
-import { adminLogin } from "@/app/Functions/user_related";
+import { adminLogin, getAdminToken, isAdminAuthenticated } from "@/app/Functions/admin_related";
 import { validateEmail, validatePassword } from "@/app/Functions/validation";
-import { signIn } from "next-auth/react";
+import LoadingPage from "@/app/loading";
+import Cookies from "js-cookie"
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 function Login() {
     const [cred, setCred] = useState({ Email: "", Password: "" });
     const [error, setError] = useState("")
+    const [loading, setLoading] = useState(true)
     const router = useRouter()
+
+    useEffect(() => {
+        isAdminAuthenticated(getAdminToken() + "").then(({ status }) => {
+            if (status) {
+                router.push("/admin/dashboard")
+            } else {
+                setLoading(false)
+            }
+        })
+    }, [])
 
     const submitButton = () => {
         if (validateEmail(cred.Email)) {
             if (validatePassword(cred.Password)) {
-                signIn('AdminCredentials', {
-                    redirect: false,
-                    Email: cred.Email,
-                    Password: cred.Password,
-                }).then(result => {
-                    result?.error ? setError('Invalid Email or Password. Please try again.') : router.push('/');
-                })
+
+                (async () => {
+                    const { data, status, token } = await adminLogin({ Email: cred.Email + "", Password: cred.Password + "" });
+                    if (status && token) {
+                        Cookies.set("adminToken", token)
+                        router.push("/admin/dashboard")
+                    } else {
+                        setError(data.message)
+                    }
+                })();
+
             } else {
                 setError("Invalid Password")
             }
@@ -28,6 +44,8 @@ function Login() {
         }
 
     }
+
+    if (loading) { return <LoadingPage /> }
 
     return (
         <div className="min-h-screen flex overflow-hidden bottom-0 justify-center items-center"

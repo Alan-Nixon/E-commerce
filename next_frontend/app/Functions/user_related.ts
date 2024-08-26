@@ -1,20 +1,17 @@
 import { GraphQLClient } from 'graphql-request';
 import Cookies from 'js-cookie'
-import { ADMIN_LOGIN, LOGIN_MUTATION, REGISTER_MUTATION, USER_DETAILS } from './user_query_mutation';
+import { CHANGE_IMAGE, LOGIN_MUTATION, REGISTER_MUTATION, USER_DETAILS } from './user_query_mutation';
 import { signOut } from 'next-auth/react';
 
 const getToken = () => "Bearer" + Cookies.get('userToken');
 
-const client = new GraphQLClient(process.env.NEXT_PUBLIC_BACKEND_URL || '', {
+export const client = new GraphQLClient(process.env.NEXT_PUBLIC_BACKEND_URL || '', {
     headers: { authorization: getToken() }
 });
 
 export const logout = () => { signOut({ callbackUrl: '/user/login' }) }
 
-interface loginType {
-    Email: string,
-    Password: string
-}
+
 
 export const postLogin = async (Data: loginType): Promise<responseType> => {
     try {
@@ -51,10 +48,12 @@ export const postRegister = async (userRegister: userInterface) => {
     }
 }
 
-export const adminLogin = async ({ Email, Password }: loginType) => {
+
+export const uploadImage = async (file: File) => {
     try {
-        const { adminLogin }: { adminLogin: responseType } = await client.request(ADMIN_LOGIN, { Email, Password })
-        return adminLogin
+        const result = await client.request(CHANGE_IMAGE, { file })
+        console.log(result)
+        return result
     } catch (error: any) {
         console.log(error);
         return { status: false, message: error.message ?? "Internal error occured", data: null, token: "" }

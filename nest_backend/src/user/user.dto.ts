@@ -64,3 +64,16 @@ export type UserType = {
     IsAdmin: boolean,
     IsBlocked: boolean,
 }
+
+export type Payload = {
+    Email: string;
+    FullName: string;
+    IsAdmin: boolean;
+    IsBlocked: boolean;
+    Name: string;
+    Password: string;
+    Phone: number;
+    ProfileImage: string;
+    iat: number; 
+    exp: number; 
+};

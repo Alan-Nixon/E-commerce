@@ -34,11 +34,22 @@ export class UserResolver {
         return await this.UserService.forgetPassword(Email, newPassword)
     }
 
-    // admin
+    // @Mutation(() => responseType)
+    // async changeImage(@Args('file') file: File) {
+    //     console.log(file)
+    // }
+
+
+    ///////////////////////////// ADMIN \\\\\\\\\\\\\\\\\\\\\\\\\\\\\\\
 
     @Mutation(() => responseType)
     async adminLogin(@Args('Email') Email: string, @Args('Password') Password: string) {
-        return await this.UserService.adminLogin(Email,Password)
+        return await this.UserService.adminLogin(Email, Password)
+    }
+
+    @Mutation(() => responseType)
+    async isAdminAuth(@Args('Token') Token: string) {
+        return await this.UserService.isAdminAuth(Token)
     }
 
 }
